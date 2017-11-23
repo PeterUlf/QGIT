@@ -2,6 +2,7 @@
         session_start();
         include "../forbindelse.php";
 $form1="";
+$folder="http://helf-kea.dk/Q2/";
 
 if(!isset($_SESSION["koenavn"]) or $_SESSION["koenavn"]==""){
   
@@ -88,7 +89,7 @@ $fejloutput="";
         }
 
         if(isset($_SESSION["pwd"])){
-            $output.="<button onclick='location.href=\"opretQ.php\"'>Slet kø</button><button onclick='location.href=\"vejledning.php?logud=true\"'>Log ud</button><br>";
+            $output.="<button onclick='location.href=\"opretQ.php\"'>Ryd kø</button><button onclick='location.href=\"vejledning.php?logud=true\"'>Log ud</button><br>";
             
         }            
         $forbindelse->close();
@@ -170,8 +171,8 @@ $fejloutput="";
             <div id="urlcontainer">
                 Deltagernes link til køen:<br>
                 <span id="url">
-                    <a href='http://helf-kea.dk/Q2/vejledning.php?<?php echo "Q=".$_SESSION["koenavn"]?>'>
-                        http://helf-kea.dk/Q2/vejledning.php?<?php echo "Q=".$_SESSION["koenavn"]?>
+                    <a href='<?php echo $folder; ?>vejledning.php?<?php echo "Q=".$_SESSION["koenavn"]?>'>
+                        <?php echo $folder; ?>vejledning.php?<?php echo "Q=".$_SESSION["koenavn"]?>
                     </a>
                 </span>   
             </div>
