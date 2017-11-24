@@ -105,11 +105,11 @@ while ($i<count($koer)){
         <h1>Administration af kø: </h1>
         
             <h2>1. Vælg kø</h2>
-            Vælg kø: <span style="font-size:0.75em; color:lightgray">http://helf-kea.dk/Q2/vejledning.php?Q=</span> 
+            Vælg: <span style="font-size:0.75em; color:lightgray">http://helf-kea.dk/Q2/vejledning.php?Q=</span> 
             <select id="eksnavn">
                <?php echo $options; ?> 
             </select><br>
-            eller tilføj ny kø:
+            eller tilføj kø:
             <input type="text" id="nynavn" placeholder="kø-navn" autofocus><br>
            
             <h2>2. Log ind</h2>
