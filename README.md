@@ -7,6 +7,7 @@ VEJLEDNINGSKØ
 
     filens indhold (udfyld de rigtige navne/password):
 
+    <!--
     <?php
         $servername = "xxx";
         $username = "yyy";
@@ -19,6 +20,7 @@ VEJLEDNINGSKØ
             die("Connection failed: " . $forbindelse->connect_error);
         }
     ?>
+    -->
 
 3. I filen vejledning.php: af linje 5:
     $folder="http://helf-kea.dk/Q2/";
