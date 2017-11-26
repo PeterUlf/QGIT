@@ -1,14 +1,12 @@
 # QGIT
-VEJLEDNINGSKØ
+Vejledningskø
 
-1. Upload filerne til en mappe - vilkårligt navn
+1. Upload filerne til en mappe - vilkårligt navn.
 
 2. Tilføj en fil, forbindelse.php, på samme niveau som mappen.
+Filen forbindelse.php skal have dette indhold (værdier tilpasses ens egen database):
 
-    filens indhold (udfyld de rigtige navne/password):
-
-    <!--
-    <?php
+<?php
         $servername = "xxx";
         $username = "yyy";
         $password = "zzz";
@@ -19,9 +17,6 @@ VEJLEDNINGSKØ
         if ($forbindelse->connect_error) {
             die("Connection failed: " . $forbindelse->connect_error);
         }
-    ?>
-    -->
+?>
 
-3. I filen vejledning.php: af linje 5:
-    $folder="http://helf-kea.dk/Q2/";
-    til mappe-adressen på domæne.
+3. I filen vejledning.php skal variablen $folder tilpasses: url-adressen på ens mappe.

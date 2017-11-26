@@ -13,7 +13,7 @@
 
         include "../forbindelse.php";
 
-        $sql = "select * from ".$_SESSION["koenavn"]." order by tidspunkt asc";
+        $sql = "select * from q2_".$_SESSION["koenavn"]." order by tidspunkt asc";
         $result= $forbindelse->query($sql);
 
         if($result->num_rows>0) { 
@@ -21,8 +21,9 @@
             while($row=$result->fetch_assoc()){
                 $navn = $row["navn"];
                 $tidspunkt = $row["tidspunkt"];
+                $emne = $row["emne"];
                 $t= secondsToTime(microtime(true)-$tidspunkt);
-                echo "<div class='opstilling'>$navn</div><div class='opstilling'> $t </div>"; 
+                echo "<div class='opstilling'>$navn -> $emne</div><div class='opstilling'> $t </div>";
                 if(isset($_SESSION["pwd"])){
                     echo "<form class='opstilling'> <input type='hidden' name='slettes' value='".$row['deltagernummer']."'><input class='slet' type='submit' value='X'></form><br>";
                 }

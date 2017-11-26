@@ -2,7 +2,7 @@
     session_start();
     include "../forbindelse.php";
     $form="";
-    $folder="http://helf-kea.dk/Q2/";
+    $folder="http://mni-kea.dk/Q/";
     if(!isset($_SESSION["koenavn"]) or $_SESSION["koenavn"]==""){
     }else{
         $sql="SHOW TABLES LIKE '".$_SESSION["koenavn"]."'";
@@ -15,7 +15,13 @@
         $_SESSION["koenavn"]=$_REQUEST["Q"]; 
         header('Location: vejledning.php');
     }
-
+    function secondsToTime($s){
+        $h = floor($s / 3600);
+        $s -= $h * 3600;
+        $m = floor($s / 60);
+        $s -= $m * 60;
+        return $h.':'.sprintf('%02d', $m).':'.sprintf('%02d', $s);
+    }
     function sletStud($nr, $f){
         $sql="SELECT navn FROM ".$_SESSION["koenavn"]." WHERE deltagernummer =".$nr;
         $result=$f->query($sql);
@@ -54,8 +60,8 @@
             header('Location: vejledning.php');
         } else {
 
-            $fejloutput= "Hov, ".$_REQUEST["navn"]."! Du er allerede i kø.". 
-               "<form class='f-slet'><button name='sletmig' title='Slet mig fra kø!' value='".$_SESSION['mig']."' type='submit'> Slet mig fra kø </button></a></form>";
+            $fejloutput= "Hov, ".$_REQUEST["navn"]."! Du må kun stå i køen 1 gang.".
+               "<form class='f-slet'><button name='sletmig' title='slet mig fra køen' value='".$_SESSION['mig']."' type='submit'> Slet mig fra køen </button></a></form>";
         }
     }else if(isset($_REQUEST["sletmig"])){
         sletmig($forbindelse);
@@ -137,7 +143,7 @@
     </head>
     <body>
         <div class="wrapper">
-            <h1>Kø: 
+            <h1>Vejledningskø:
                 <?php 
                     if(isset($_SESSION["koenavn"]) and $_SESSION["koenavn"]!=""){
                         echo $_SESSION["koenavn"]; 
@@ -148,20 +154,21 @@
             </h1>
             <?php if(isset($_SESSION["pwd"])){ ?>
             <div id="urlcontainer">
+                Link til kø:<br>
                 <span id="url">
                     <a href='<?php echo $folder; ?>vejledning.php?<?php echo "Q=".$_SESSION["koenavn"]?>'>
-                        <?php echo $folder; ?>vejledning.php?<?php echo "Q=<b>".$_SESSION["koenavn"]."</b>"; ?>
+                        <?php echo $folder; ?>vejledning.php?<?php echo "Q=".$_SESSION["koenavn"]?>
                     </a>
                 </span>   
             </div>
             <?php } ?> 
             
             <div id="header"></div>
-            <div> 
+            <div>I kø:
                 <div id="under"></div>
                 <form class="kinput" >
                     <input type="text" name="navn" placeholder="Navn + emne" required autofocus>
-                    <button  type="submit" >I kø</button>
+                    <button  type="submit" >i kø</button>
                 </form>
                 <?php if(isset($_SESSION["mig"]))echo $fejloutput; ?>
                 <div id="queue"></div>
