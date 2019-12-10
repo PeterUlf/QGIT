@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include "../forbindelse.php";
+    include "forbindelse.php";
     $form="";
     $folder="http://mni-kea.dk/Q/";
     $test="";
@@ -101,16 +101,117 @@
     }
     $forbindelse->close();
 ?>
-    <!DOCTYPE html>
-    <html>
+<!DOCTYPE html>
+<html>
 
-    <head>
-        <meta charset="utf-8">
-        <title>kom på vejledningskø</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="utf-8">
+    <title>kom på vejledningskø</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <style>
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body,
+        input,
+        form,
+        .knap,
+        button {
+            font-family: sans-serif;
+            font-size: 1.5vw;
+        }
+
+        h1 {
+            font-size: 2vw;
+            display: inline-block;
+        }
+
+        .opstilling {
+            display: inline-block;
+            width: 12vw;
+        }
+
+        button {
+            padding: 0.1vw;
+        }
+
+        .wrapper1 {
+            width: 38vw;
+            margin: auto;
+            display: none;
+        }
+
+        .wrapper {
+            width: 38vw;
+            margin: auto;
+            display: block;
+        }
+
+        img,
+        iframe {
+            width: 22vw;
+        }
+
+        iframe {
+            width: 40vw;
+            height: 60vw;
+            border: 0;
+        }
+
+        input[type=text],
+        input[type=submit],
+        textarea,
+        button,
+        .slet {
+            -webkit-transition: all 0.80s ease-in-out;
+            -moz-transition: all 0.80s ease-in-out;
+            -ms-transition: all 0.80s ease-in-out;
+            -o-transition: all 0.80s ease-in-out;
+            outline: none;
+            border: none;
+            padding: 5px;
+            padding-left: 9px;
+            padding-right: 9px;
+            margin: 5px;
+            background-color: lightgrey;
+            color: darkgray;
+            border-radius: 20px;
+
+        }
+
+        input[type=text]:focus,
+        input[type=submit]:focus,
+        textarea:focus {
+            color: red;
+            background-color: darkgrey;
+            color: lightgray;
+        }
+
+        input[type=text]:hover,
+        input[type=submit]:hover,
+        textarea:hover,
+        button:hover,
+        .slet:hover {
+
+            background-color: darkslategray;
+            color: lightgray;
+        }
+
+        .f-slet {
+            display: inline-block;
+        }
+
+        #urlcontainer {
+            font-size: 0.7em;
+            padding-bottom: 20px;
+        }
+
+
+        @media screen and (max-width: 800px) {
             * {
                 padding: 0;
                 margin: 0;
@@ -122,227 +223,133 @@
             .knap,
             button {
                 font-family: sans-serif;
-                font-size: 1.5vw;
+                font-size: 1em;
             }
 
             h1 {
-                font-size: 2vw;
+                font-size: 2em;
                 display: inline-block;
             }
 
             .opstilling {
                 display: inline-block;
-                width: 12vw;
+                width: 30vw;
             }
 
             button {
-                padding: 0.1vw;
-            }
-
-            .wrapper1 {
-                width: 38vw;
-                margin: auto;
-                display: none;
+                padding: 0vw;
             }
 
             .wrapper {
-                width: 38vw;
+                width: 100vw;
                 margin: auto;
-                display: block;
             }
 
             img,
             iframe {
-                width: 22vw;
+                width: 94vw;
             }
 
             iframe {
-                width: 40vw;
-                height: 60vw;
+                width: 100vw;
+                height: 100vh;
                 border: 0;
             }
+        }
 
-            input[type=text],
-            input[type=submit],
-            textarea,
-            button,
-            .slet {
-                -webkit-transition: all 0.80s ease-in-out;
-                -moz-transition: all 0.80s ease-in-out;
-                -ms-transition: all 0.80s ease-in-out;
-                -o-transition: all 0.80s ease-in-out;
-                outline: none;
-                border: none;
-                padding: 5px;
-                padding-left: 9px;
-                padding-right: 9px;
-                margin: 5px;
-                background-color: lightgrey;
-                color: darkgray;
-                border-radius: 20px;
+    </style>
+</head>
 
-            }
+<body>
+    <div class="wrapper">
+        <?php if ($test) { ?>
+        <h2>1. Vælg kø</h2>
+        Vælg kø:
+        <select id="eksnavn">
+            <?php echo $options; ?>
+        </select>
 
-            input[type=text]:focus,
-            input[type=submit]:focus,
-            textarea:focus {
-                color: red;
-                background-color: darkgrey;
-                color: lightgray;
-            }
+        <form>
+            <input id="koenavn" name="Q" type="hidden">
 
-            input[type=text]:hover,
-            input[type=submit]:hover,
-            textarea:hover,
-            button:hover,
-            .slet:hover {
+            <!--            <input type="text" name="vejledernavn" placeholder="undervisernavn" required ><br><br>-->
+            <input name="submit" type="submit" value="Gå til køen">
+        </form>
+    </div>
+    <script>
+        $("#eksnavn").on("change", setname2);
+        $("#eksnavn").on("input", setname2);
 
-                background-color: darkslategray;
-                color: lightgray;
-            }
+        function setname2() {
+            $("#koenavn").val($("#eksnavn option:selected").val());
+        }
 
-            .f-slet {
-                display: inline-block;
-            }
+    </script>
 
-            #urlcontainer {
-                font-size: 0.7em;
-                padding-bottom: 20px;
-            }
-
-
-            @media screen and (max-width: 800px) {
-                * {
-                    padding: 0;
-                    margin: 0;
-                }
-                body,
-                input,
-                form,
-                .knap,
-                button {
-                    font-family: sans-serif;
-                    font-size: 1em;
-                }
-                h1 {
-                    font-size: 2em;
-                    display: inline-block;
-                }
-                .opstilling {
-                    display: inline-block;
-                    width: 30vw;
-                }
-                button {
-                    padding: 0vw;
-                }
-                .wrapper {
-                    width: 100vw;
-                    margin: auto;
-                }
-                img,
-                iframe {
-                    width: 94vw;
-                }
-                iframe {
-                    width: 100vw;
-                    height: 100vh;
-                    border: 0;
-                }
-            }
-
-        </style>
-    </head>
-
-    <body>
-        <div class="wrapper">
-            <?php if ($test) { ?>
-            <h2>1. Vælg kø</h2>
-            Vælg kø:
-            <select id="eksnavn">
-               <?php echo $options; ?>
-            </select>
-
-            <form>
-                <input id="koenavn" name="Q" type="hidden">
-
-                <!--            <input type="text" name="vejledernavn" placeholder="undervisernavn" required ><br><br>-->
-                <input name="submit" type="submit" value="Gå til køen">
-            </form>
-        </div>
-        <script>
-            $("#eksnavn").on("change", setname2);
-            $("#eksnavn").on("input", setname2);
-
-            function setname2() {
-                $("#koenavn").val($("#eksnavn option:selected").val());
-            }
-
-        </script>
-
-        <?php } else { ?>
-        <h1>Vejledningskø:
-            <?php
+    <?php } else { ?>
+    <h1>Vejledningskø:
+        <?php
                     if(isset($_SESSION["koenavn"]) and $_SESSION["koenavn"]!=""){
                         echo $_SESSION["koenavn"];
                     }else {
                         echo "Ingen";
                     }
                 ?>
-        </h1>
+    </h1>
 
-        <div id="header"></div>
+    <div id="header"></div>
 
-        <div>I kø:
-            <div id="under"></div>
-            <form class="kinput">
-                <input type="text" name="navn" placeholder="Navn" required autofocus>
-                <div id="emne_drop"></div>
+    <div>I kø:
+        <div id="under"></div>
+        <form class="kinput">
+            <input type="text" name="navn" placeholder="Navn" required autofocus>
+            <div id="emne_drop"></div>
 
-                <input id="ny_emne" type="text" name="ny_emne" placeholder="Emne">
+            <input id="ny_emne" type="text" name="ny_emne" placeholder="Emne">
 
 
-                <input id="emne" name="emne" type="hidden">
-                <button type="submit">i kø</button>
-            </form>
-            <?php if(isset($_SESSION["mig"]))
+            <input id="emne" name="emne" type="hidden">
+            <button type="submit">i kø</button>
+        </form>
+        <?php if(isset($_SESSION["mig"]))
 
                     echo $fejloutput; ?>
-            <div id="queue"></div>
-            <div id="adm">
-                <?php echo $output; ?><br></div>
-        </div>
-        <div id="d"></div>
-        <script>
-            $(document).on("ready", opdater);
+        <div id="queue"></div>
+        <div id="adm">
+            <?php echo $output; ?><br></div>
+    </div>
+    <div id="d"></div>
+    <script>
+        $(document).on("ready", opdater);
 
-            $("#emne_drop").load("visEmne.php", opdaterEmne);
+        $("#emne_drop").load("visEmne.php", opdaterEmne);
 
-            function opdaterEmne() {
+        function opdaterEmne() {
 
-                $("#ny_emne").on("input", setemne);
-                $("#eks_emne").on("change", setemne2);
-                $("#eks_emne").on("input", setemne2);
-            }
+            $("#ny_emne").on("input", setemne);
+            $("#eks_emne").on("change", setemne2);
+            $("#eks_emne").on("input", setemne2);
+        }
 
-            function setemne() {
-                $("#emne").val($(this).val());
-            }
+        function setemne() {
+            $("#emne").val($(this).val());
+        }
 
 
-            function setemne2() {
-                $("#emne").val($("#eks_emne option:selected").val());
-            }
+        function setemne2() {
+            $("#emne").val($("#eks_emne option:selected").val());
+        }
 
-            function opdater() {
-                $("#under").load("visO.php").css("display", "none");
-                var a = $("#under").html().split("*");
-                $("#queue").load("visQ.php");
-            }
-            setInterval(opdater, 10000);
+        function opdater() {
+            $("#under").load("visO.php").css("display", "none");
+            var a = $("#under").html().split("*");
+            $("#queue").load("visQ.php");
+        }
+        setInterval(opdater, 10000);
 
-        </script>
+    </script>
 
-        <?php } ?>
-    </body>
+    <?php } ?>
+</body>
 
-    </html>
+</html>

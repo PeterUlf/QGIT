@@ -8,7 +8,7 @@
     $koer =file_get_contents('koer.txt'); ;
     if (strpos($koer, $_SESSION["koenavn"])){
 
-        include "../forbindelse.php";
+        include "forbindelse.php";
 
         $sql = "select emne from q2_".$_SESSION["koenavn"]." order by emne asc";
         $result= $forbindelse->query($sql);

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include "../forbindelse.php";
+    include "forbindelse.php";
     $form="";
     $folder="http://peujatkea.dk/q/";
     if(!isset($_SESSION["koenavn"]) or $_SESSION["koenavn"]==""){
@@ -236,6 +236,7 @@
                 border: 0;
             }
         }
+
     </style>
 </head>
 
@@ -284,6 +285,7 @@
             $("#queue").load("visQ.php");
         }
         setInterval(opdater, 1000);
+
     </script>
 </body>
 

@@ -11,7 +11,7 @@
     $koer =file_get_contents('koer.txt'); ;
     if (strpos($koer, $_SESSION["koenavn"])){
 
-        include "../forbindelse.php";
+        include "forbindelse.php";
 
         $sql = "select * from q2_".$_SESSION["koenavn"]." order by tidspunkt asc";
         $result= $forbindelse->query($sql);

@@ -1,6 +1,6 @@
 <?php
 session_start();
-    include "../forbindelse.php";
+    include "forbindelse.php";
 $number =file_get_contents('counter.txt');
 $number++;
 file_put_contents('counter.txt',$number);
