@@ -287,6 +287,10 @@
     </script>
 
     <?php } else { ?>
+    <div style="border:1px solid black;">
+        <label>Skift kø</label>
+        <form action="destroy.php"><input type="submit" value="Log ud af alle køer"></form>
+    </div>
     <h1>Vejledningskø:
         <?php
                     if(isset($_SESSION["koenavn"]) and $_SESSION["koenavn"]!=""){
